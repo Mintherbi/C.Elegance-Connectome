@@ -118,8 +118,8 @@ class ConnectomeVisualizer {
     
     setupSVG() {
         const container = d3.select('#canvas-container');
-        const width = container.node().getBoundingClientRect().width;
-        const height = container.node().getBoundingClientRect().height;
+        const width = 800;  // Fixed width to match main content
+        const height = 600;  // Fixed height
         
         this.svg = d3.select('#network-svg')
             .attr('width', width)
@@ -183,14 +183,14 @@ class ConnectomeVisualizer {
     }
     
     createVisualization() {
+        const width = 800;
+        const height = 600;
+        
         // Create force simulation
         this.simulation = d3.forceSimulation(this.nodes)
             .force('link', d3.forceLink(this.edges).id(d => d.id).distance(50))
             .force('charge', d3.forceManyBody().strength(-300))
-            .force('center', d3.forceCenter(
-                this.svg.attr('width') / 2,
-                this.svg.attr('height') / 2
-            ))
+            .force('center', d3.forceCenter(width / 2, height / 2))
             .force('collision', d3.forceCollide().radius(15));
         
         this.updateVisualization();
@@ -385,18 +385,8 @@ class ConnectomeVisualizer {
     }
     
     handleResize() {
-        const container = d3.select('#canvas-container');
-        const width = container.node().getBoundingClientRect().width;
-        const height = container.node().getBoundingClientRect().height;
-        
-        this.svg
-            .attr('width', width)
-            .attr('height', height);
-        
-        this.simulation
-            .force('center', d3.forceCenter(width / 2, height / 2))
-            .alpha(0.3)
-            .restart();
+        // No need to handle resize since we're using fixed dimensions
+        // The CSS will handle responsive behavior
     }
 }
 
