@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>C. elegans Connectome 3D Visualization</title>
+    <link rel="stylesheet" href="src/style/style.css">
+</head>
+<body>
+    <div id="info-panel">
+        <h1>C. elegans Connectome</h1>
+        <div id="controls">
+            <div class="control-group">
+                <label for="neurotransmitter-filter">Neurotransmitter Filter:</label>
+                <select id="neurotransmitter-filter">
+                    <option value="all">All</option>
+                    <option value="exc">Excitatory</option>
+                    <option value="inh">Inhibitory</option>
+                    <option value="ach">Acetylcholine</option>
+                    <option value="gaba">GABA</option>
+                    <option value="glu">Glutamate</option>
+                    <option value="da">Dopamine</option>
+                    <option value="ser">Serotonin</option>
+                </select>
+            </div>
+            <div class="control-group">
+                <label for="connection-strength">Min Connection Strength:</label>
+                <input type="range" id="connection-strength" min="1" max="20" value="1">
+                <span id="strength-value">1</span>
+            </div>
+            <div class="control-group">
+                <button id="reset-camera">Reset Camera</button>
+                <button id="toggle-labels">Toggle Labels</button>
+            </div>
+        </div>
+        <div id="legend">
+            <h3>Legend</h3>
+            <div class="legend-item">
+                <div class="legend-color" style="background-color: #ff0000;"></div>
+                <span>Excitatory (exc)</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background-color: #0000ff;"></div>
+                <span>Inhibitory (inh)</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background-color: #00ff00;"></div>
+                <span>Acetylcholine (ach)</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background-color: #ffff00;"></div>
+                <span>GABA (gaba)</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background-color: #ff00ff;"></div>
+                <span>Glutamate (glu)</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background-color: #00ffff;"></div>
+                <span>Dopamine (da)</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background-color: #ffa500;"></div>
+                <span>Serotonin (ser)</span>
+            </div>
+        </div>
+        <div id="node-info">
+            <h3>Selected Neuron</h3>
+            <div id="node-details">Click on a neuron to see details</div>
+        </div>
+    </div>
+
+    <div id="canvas-container">
+        <svg id="network-svg"></svg>
+    </div>
+
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script src="src/javascript/connectome-visualizer.js"></script>
+</body>
+</html>
