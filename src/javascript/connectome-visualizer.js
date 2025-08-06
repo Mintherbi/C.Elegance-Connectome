@@ -82,8 +82,8 @@ class ConnectomeVisualizer {
                 return {
                     id: neuron,
                     name: neuron,
-                    x: position ? position.x * 2 : Math.random() * 800,
-                    y: position ? position.y * 2 : Math.random() * 600,
+                    x: position ? position.x * 2 : Math.random() * window.innerWidth,
+                    y: position ? position.y * 2 : Math.random() * window.innerHeight,
                     z: position ? position.z * 2 : 0,
                     connections: 0
                 };
@@ -118,8 +118,8 @@ class ConnectomeVisualizer {
     
     setupSVG() {
         const container = d3.select('#canvas-container');
-        const width = 800;  // Fixed width to match main content
-        const height = 600;  // Fixed height
+        const width = window.innerWidth;
+        const height = window.innerHeight;
         
         this.svg = d3.select('#network-svg')
             .attr('width', width)
@@ -183,8 +183,8 @@ class ConnectomeVisualizer {
     }
     
     createVisualization() {
-        const width = 800;
-        const height = 600;
+        const width = window.innerWidth;
+        const height = window.innerHeight;
         
         // Create force simulation
         this.simulation = d3.forceSimulation(this.nodes)
@@ -385,8 +385,21 @@ class ConnectomeVisualizer {
     }
     
     handleResize() {
-        // No need to handle resize since we're using fixed dimensions
-        // The CSS will handle responsive behavior
+        const width = window.innerWidth;
+        const height = window.innerHeight;
+        
+        // Update SVG dimensions
+        this.svg
+            .attr('width', width)
+            .attr('height', height);
+        
+        // Update force simulation center
+        if (this.simulation) {
+            this.simulation
+                .force('center', d3.forceCenter(width / 2, height / 2))
+                .alpha(0.3)
+                .restart();
+        }
     }
 }
 

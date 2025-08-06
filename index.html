@@ -8,99 +8,48 @@
     <link rel="stylesheet" href="src/style/style.css">
 </head>
 <body>
-    <header>
-        <div class="left">Columbia GSAPP</div>
-        <div class="center">
-            Computational Design Workflows<br>
-            <span>Neural Network Visualization</span>
-        </div>
-        <div class="right">About</div>
-    </header>
+    <div id="canvas-container">
+        <svg id="network-svg"></svg>
+    </div>
 
-    <main>
-        <div class="project-meta">2025</div>
-        <div class="project-title">C. elegans Connectome Visualization</div>
-        <div class="project-subtitle">Interactive Neural Network Explorer</div>
-        <div class="advisor">Advisor: Catherine Griffiths</div>
-        
-        <div class="section-title">Abstract</div>
-        <p>This project presents an interactive visualization of the C. elegans connectome, the complete neural network of the nematode worm. Using D3.js, we create a dynamic network graph where each neuron is represented as a node and synaptic connections as edges. The visualization incorporates spatial positioning data and color-codes connections based on neurotransmitter types, providing an intuitive way to explore the neural architecture of this model organism.</p>
-        
-        <div class="section-title">Motivation</div>
-        <p>C. elegans is the only organism with a completely mapped nervous system, making it an ideal model for understanding neural connectivity patterns. This visualization tool helps researchers and students explore the complex relationships between neurons, identify important network hubs, and understand how spatial organization relates to functional connectivity in the nervous system.</p>
-        
-        <div class="section-title">Interactive Controls</div>
-        <div id="controls-container">
-            <div class="control-group">
-                <label for="neurotransmitter-filter">Neurotransmitter Filter:</label>
-                <select id="neurotransmitter-filter">
-                    <option value="all">All</option>
-                    <option value="exc">Excitatory</option>
-                    <option value="inh">Inhibitory</option>
-                    <option value="ach">Acetylcholine</option>
-                    <option value="gaba">GABA</option>
-                    <option value="glu">Glutamate</option>
-                    <option value="da">Dopamine</option>
-                    <option value="ser">Serotonin</option>
-                </select>
-            </div>
-            <div class="control-group">
-                <label for="connection-strength">Min Connection Strength:</label>
-                <input type="range" id="connection-strength" min="1" max="20" value="1">
-                <span id="strength-value">1</span>
-            </div>
-            <div class="control-group">
-                <button id="reset-camera">Reset Camera</button>
-                <button id="toggle-labels">Toggle Labels</button>
-            </div>
+    <div id="controls-container">
+        <div class="control-group">
+            <label for="neurotransmitter-filter">Neurotransmitter:</label>
+            <select id="neurotransmitter-filter">
+                <option value="all">All</option>
+                <option value="exc">Excitatory</option>
+                <option value="inh">Inhibitory</option>
+                <option value="ach">Acetylcholine</option>
+                <option value="gaba">GABA</option>
+                <option value="glu">Glutamate</option>
+                <option value="da">Dopamine</option>
+                <option value="ser">Serotonin</option>
+            </select>
         </div>
-        
-        <div class="section-title">Neural Network Visualization</div>
-        <p>The interactive network below shows the complete C. elegans connectome. Each circle represents a neuron, and the connecting lines show synaptic connections. Colors indicate different neurotransmitter types, and you can filter connections by strength and type using the controls above.</p>
-        
-        <div id="canvas-container">
-            <svg id="network-svg"></svg>
+        <div class="control-group">
+            <label for="connection-strength">Min Strength:</label>
+            <input type="range" id="connection-strength" min="1" max="20" value="1">
+            <span id="strength-value">1</span>
         </div>
-        
-        <div class="legend-section">
-            <div class="section-title">Legend</div>
-            <div id="legend-container">
-                <div class="legend-item">
-                    <div class="legend-color" style="background-color: #ff0000;"></div>
-                    <span>Excitatory (exc)</span>
-                </div>
-                <div class="legend-item">
-                    <div class="legend-color" style="background-color: #0000ff;"></div>
-                    <span>Inhibitory (inh)</span>
-                </div>
-                <div class="legend-item">
-                    <div class="legend-color" style="background-color: #00ff00;"></div>
-                    <span>Acetylcholine (ach)</span>
-                </div>
-                <div class="legend-item">
-                    <div class="legend-color" style="background-color: #ffff00;"></div>
-                    <span>GABA (gaba)</span>
-                </div>
-                <div class="legend-item">
-                    <div class="legend-color" style="background-color: #ff00ff;"></div>
-                    <span>Glutamate (glu)</span>
-                </div>
-                <div class="legend-item">
-                    <div class="legend-color" style="background-color: #00ffff;"></div>
-                    <span>Dopamine (da)</span>
-                </div>
-                <div class="legend-item">
-                    <div class="legend-color" style="background-color: #ffa500;"></div>
-                    <span>Serotonin (ser)</span>
-                </div>
-            </div>
+        <div class="control-group">
+            <button id="reset-camera">Reset Camera</button>
+            <button id="toggle-labels">Toggle Labels</button>
         </div>
-        
-        <div class="section-title">Selected Neuron Information</div>
-        <div id="node-info">
-            <div id="node-details">Click on a neuron in the visualization above to see detailed information about its connections and properties.</div>
-        </div>
-    </main>
+    </div>
+    
+    <div id="node-info">
+        <div id="node-details">Click on a neuron to see details.</div>
+    </div>
+
+    <div id="legend-container">
+        <div class="legend-item"><div class="legend-color" style="background-color: #ff0000;"></div><span>Excitatory</span></div>
+        <div class="legend-item"><div class="legend-color" style="background-color: #0000ff;"></div><span>Inhibitory</span></div>
+        <div class="legend-item"><div class="legend-color" style="background-color: #00ff00;"></div><span>Acetylcholine</span></div>
+        <div class="legend-item"><div class="legend-color" style="background-color: #ffff00;"></div><span>GABA</span></div>
+        <div class="legend-item"><div class="legend-color" style="background-color: #ff00ff;"></div><span>Glutamate</span></div>
+        <div class="legend-item"><div class="legend-color" style="background-color: #00ffff;"></div><span>Dopamine</span></div>
+        <div class="legend-item"><div class="legend-color" style="background-color: #ffa500;"></div><span>Serotonin</span></div>
+    </div>
 
     <script src="https://d3js.org/d3.v7.min.js"></script>
     <script src="src/javascript/connectome-visualizer.js"></script>
