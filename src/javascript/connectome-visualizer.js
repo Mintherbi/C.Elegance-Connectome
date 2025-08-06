@@ -164,6 +164,18 @@ class ConnectomeVisualizer {
         }).on('change', () => {
             this.updateVisualization();
         });
+
+        // Repulsion strength filter
+        d3.select('#repulsion-strength').on('input', function() {
+            d3.select('#repulsion-value').text(this.value);
+            this.updateForces();
+        }.bind(this));
+
+        // Link distance filter
+        d3.select('#link-distance').on('input', function() {
+            d3.select('#distance-value').text(this.value);
+            this.updateForces();
+        }.bind(this));
         
         // Reset camera
         d3.select('#reset-camera').on('click', () => {
@@ -200,6 +212,8 @@ class ConnectomeVisualizer {
         const neurotransmitterFilter = d3.select('#neurotransmitter-filter').node().value;
         const minStrength = +d3.select('#connection-strength').node().value;
         
+        this.updateForces();
+
         // Filter edges
         let filteredEdges = this.edges.filter(edge => {
             const strengthOk = edge.strength >= minStrength;
@@ -297,6 +311,17 @@ class ConnectomeVisualizer {
                 .attr('x', d => d.x)
                 .attr('y', d => d.y + 20);
         });
+    }
+    
+    updateForces() {
+        const repulsionStrength = -d3.select('#repulsion-strength').node().value;
+        const linkDistance = +d3.select('#link-distance').node().value;
+
+        if (this.simulation) {
+            this.simulation.force('charge').strength(repulsionStrength);
+            this.simulation.force('link').distance(linkDistance);
+            this.simulation.alpha(0.3).restart();
+        }
     }
     
     drag() {
